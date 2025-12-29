@@ -5,7 +5,7 @@ con = sqlite3.connect("database.db")
 cursor = con.cursor()
 
 cursor.execute(''' 
-    CREATE TABLE IF NOT EXIST videos(
+    CREATE TABLE IF NOT EXISTS videos(
     id INTERGER PRMARY KEY,
     name TEXT NOT NULL,
     time TEXT NOT NULL
@@ -19,17 +19,17 @@ def list_videos():
 
 
 
-def add_videos(name, time):
-    cursor.execute("INSERT INTO videos (name, time) VALUES (?, ?)", (name, time))
-    cursor.commit()
+def add_videos(id, name, time):
+    cursor.execute("INSERT INTO videos (id, name, time) VALUES (?, ?, ?)", (id, name, time))
+    con.commit()
 
 def update_videos(id, name, time):
     cursor.execute("UPDATE videos SET name = ?, time = ? WHERE id = ?", (name, time, id))
-    cursor.commit()
+    con.commit()
 
 def delete_videos(id):
     cursor.execute("DELETE FROM videos where id = ?", (id,))
-    cursor.commit()
+    con.commit()
 
 def main():
     while True:
@@ -42,20 +42,21 @@ def main():
 
         choice = input("Enter your choice: ")
         match choice:
-            case '1': list_videos(videos)
+            case '1': list_videos()
             case '2':
+                id = input("Enter id of video")
                 name = input("Enter the video name ")
                 time = input("Enter the video time ")
-                add_video(name, time)
+                add_videos(id, name, time)
             case '3': 
                 id = input("Enter video Id to update ")
                 name = input("Enter the video name ")
                 time = input("Enetr the video time")
-                update_videos(videos)
+                update_videos(id, name, time)
 
             case '4': 
                 id = input("Enter video id to delete ")
-                delete_videos(videos)
+                delete_videos(id)
             case '5': break
 
             case _: print("Invalid Input")
@@ -64,3 +65,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# to see database we can use DB browser
