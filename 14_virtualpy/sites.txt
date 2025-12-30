@@ -1,0 +1,7 @@
+https://virtualenv.pypa.io/en/latest/user_guide.html 
+
+# command to create virtual env
+
+python -m venv environmentname
+
+https://docs.djangoproject.com/en/6.0/topics/install/#
